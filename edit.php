@@ -1,0 +1,89 @@
+<?php
+include "connection.php";
+$id=$_GET["id"];
+
+$lastname="";
+$firstname="";
+$accesslevel="";
+$address="";
+$password="";
+
+$res=mysqli_query($link, "select * from table1 where id=$id");
+while($row=mysqli_fetch_array($res))
+{
+	$firstname=$row["firstname"];
+	$lastname=$row["lastname"];
+	$accesslevel=$row["accesslevel"];
+	$faddress=$row["address"];
+	$password=$row["password"];
+}
+?>
+
+<html lang="en">
+<head>
+  <title>Update Data</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<div class="col-kg-4">
+  <h2>Update Data Form</h2>
+  <p>Retype the data you want to update</p>
+  <form action="" name="form1" method="post">
+    <div class="form-group">
+      <label for="firstname">First name:</label>
+      <input type="text" class="form-control" id="firstname" placeholder="Enter First Name" name="firstname" value="<?php echo $firstname; ?>">
+    </div>
+	
+    <div class="form-group">
+      <label for="lastname">Last name:</label>
+      <input type="text" class="form-control" id="lastname" placeholder="Enter Last Name" name="lastname" value="<?php echo $lastname; ?>">
+    </div>
+	
+	<div class="form-group">
+		<label for="accesslevel">Access Level:</label>
+      <select class="form-control" id="accesslevel" name="accesslevel" value="<?php echo $accesslevel; ?>">
+		<option value="ordinaryuser">Ordinary User</option>
+			<option value="supervisoryuser">Supervisory User</option>
+			<option value="superuser">Super User</option>
+		</select>
+    </div>
+	
+	<div class="form-group">
+      <label for="address">Address:</label>
+      <input type="text" class="form-control" id="address" placeholder="Enter Address" name="address" value="<?php echo $address; ?>">
+    </div>
+	
+	<div class="form-group">
+      <label for="password">Password</label>
+	  <input type="text" class="form-control" id="password" placeholder="Enter Password" name="password" value="<?php echo $password; ?>">
+    </div>
+
+	<button type="submit" name="update" class="btn btn-default">Update</button>
+
+  </form>
+</div>
+</div>
+
+<div class="col-kg-12">
+
+</div>
+
+</body>
+
+<?php
+if(isset($_POST["update"]))
+{
+	mysqli_query($link,"update table1 set firstname='$_POST[firstname]',lastname='$_POST[lastname]',accesslevel='$_POST[accesslevel]',address='$_POST[address]',password='$_POST[password]' where id=$id");
+	
+	?>
+	<script type="text/javascript" src="editjsref.js"></script>
+	<?php
+}
+	?>
+
+</html>
